@@ -4,13 +4,13 @@
 
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61DAFB?style=flat-square&logo=react)](https://reactjs.org)
 [![Database](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=flat-square&logo=supabase)](https://supabase.io)
-[![Deployed on Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-00C7B7?style=flat-square&logo=netlify)](https://netlify.com)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat-square&logo=vercel)](https://vercel.com)
 
 <img src="public/logo.png" alt="Project Logo" width="150px" />
 
 _Build a modern web app in just 12 hours! 🎯_
 
-[View Demo](https://your-demo-link.netlify.app) · [Report Bug](https://github.com/yourusername/your-repo/issues) · [Request Feature](https://github.com/yourusername/your-repo/issues)
+[View Demo](https://your-demo-link.vercel.app) · [Report Bug](https://github.com/yourusername/your-repo/issues) · [Request Feature](https://github.com/yourusername/your-repo/issues)
 
 </div>
 
@@ -24,7 +24,7 @@ This exciting project is part of Jonas Schmedtmann's weekend crash course on Ude
 * 🎨 **CSS** - Custom styling
 * 🗄️ **Supabase** - Backend database
 * 📱 **Responsive Design** - Mobile-first approach
-* 🚀 **Netlify** - Deployment platform
+* 🚀 **Vercel** - Deployment platform
 
 ## ⚡ Core Features
 
@@ -47,7 +47,7 @@ This exciting project is part of Jonas Schmedtmann's weekend crash course on Ude
 
 3. **Deployment**
    * Production build optimization
-   * Netlify deployment workflow
+   * Vercel deployment workflow
    * Performance monitoring
 
 ## 📸 Preview
