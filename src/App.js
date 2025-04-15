@@ -96,18 +96,32 @@ function Loader() {
 }
 
 function Header({ showForm, setShowForm }) {
+  const [theme, setTheme] = useState('dark');
   const appTitle = 'Today I learned!';
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   return (
     <header className='header'>
       <div className='logo'>
-        <img src='logo.png' alt='Today I learned logo' />
+        <img src='logo.png' height='68' width='68' alt='Today I Learned Logo' />
         <h1>{appTitle}</h1>
       </div>
       <button
         className='btn btn-large btn-open'
-        onClick={() => setShowForm(showForm => !showForm)}>
-        {showForm ? 'close' : 'Share a fact'}
+        onClick={() => setShowForm((show) => !show)}
+      >
+        {showForm ? 'Close' : 'Share a fact'}
+      </button>
+      <button
+        className={`theme-toggle ${theme === 'light' ? 'light-mode' : ''}`}
+        onClick={toggleTheme}
+      >
+        <i className='fas fa-moon'></i>
       </button>
     </header>
   );
@@ -253,6 +267,10 @@ function FactList({ facts, setFacts }) {
 
 function Fact({ fact, setFacts }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(fact.text);
+  const [editSource, setEditSource] = useState(fact.source);
+  const [editCategory, setEditCategory] = useState(fact.category);
   const isDisputed =
     fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
 
@@ -271,39 +289,126 @@ function Fact({ fact, setFacts }) {
       );
   }
 
+  async function handleDelete() {
+    setIsUpdating(true);
+    const { error } = await supabase
+      .from('facts')
+      .delete()
+      .eq('id', fact.id);
+    setIsUpdating(false);
+
+    if (!error) {
+      setFacts(facts => facts.filter(f => f.id !== fact.id));
+    }
+  }
+
+  async function handleUpdate(e) {
+    e.preventDefault();
+    if (!editText || !isValidHttpUrl(editSource) || !editCategory) return;
+
+    setIsUpdating(true);
+    const { data: updatedFact, error } = await supabase
+      .from('facts')
+      .update({ text: editText, source: editSource, category: editCategory })
+      .eq('id', fact.id)
+      .select();
+    setIsUpdating(false);
+
+    if (!error) {
+      setFacts(facts =>
+        facts.map(f => (f.id === fact.id ? updatedFact[0] : f))
+      );
+      setIsEditing(false);
+    }
+  }
+
   return (
     <li className='fact'>
-      <p>
-        {isDisputed && <span className='disputed'>[⛔ DISPUTED]</span>}
-        {fact.text}
-        <a className='source' href={fact.source} target='_blank'>
-          (Source)
-        </a>
-      </p>
-      <span
-        className='tag'
-        style={{
-          backgroundColor: `${
-            CATEGORIES.find(cat => cat.name === fact.category).color
-          }`,
-        }}>
-        {fact.category}
-      </span>
-      <div className='vote-buttons'>
-        <button
-          onClick={() => handleVote('votesInteresting')}
-          disabled={isUpdating}>
-          {fact.votesInteresting} 👍
-        </button>
-        <button
-          onClick={() => handleVote('votesMindblowing')}
-          disabled={isUpdating}>
-          {fact.votesMindblowing} 🤯
-        </button>
-        <button onClick={() => handleVote('votesFalse')} disabled={isUpdating}>
-          {fact.votesFalse} ⛔️
-        </button>
-      </div>
+      {!isEditing ? (
+        <>
+          <p>
+            {isDisputed && <span className='disputed'>[⛔ DISPUTED]</span>}
+            {fact.text}
+            <a className='source' href={fact.source} target='_blank'>
+              (Source)
+            </a>
+          </p>
+          <span
+            className='tag'
+            style={{
+              backgroundColor: `${
+                CATEGORIES.find(cat => cat.name === fact.category).color
+              }`,
+            }}>
+            {fact.category}
+          </span>
+          <div className='vote-buttons'>
+            <button
+              onClick={() => handleVote('votesInteresting')}
+              disabled={isUpdating}>
+              {fact.votesInteresting} 👍
+            </button>
+            <button
+              onClick={() => handleVote('votesMindblowing')}
+              disabled={isUpdating}>
+              {fact.votesMindblowing} 🤯
+            </button>
+            <button onClick={() => handleVote('votesFalse')} disabled={isUpdating}>
+              {fact.votesFalse} ⛔️
+            </button>
+            <button
+              className="btn"
+              onClick={() => setIsEditing(true)}
+              disabled={isUpdating}>
+              Edit
+            </button>
+            <button
+              className="delete-btn"
+              onClick={handleDelete}
+              disabled={isUpdating}>
+              Delete
+            </button>
+          </div>
+        </>
+      ) : (
+        <form className='fact-form' onSubmit={handleUpdate}>
+          <input
+            type='text'
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            disabled={isUpdating}
+          />
+          <input
+            type='text'
+            value={editSource}
+            onChange={(e) => setEditSource(e.target.value)}
+            disabled={isUpdating}
+          />
+          <select
+            value={editCategory}
+            onChange={(e) => setEditCategory(e.target.value)}
+            disabled={isUpdating}>
+            {CATEGORIES.map(cat => (
+              <option key={cat.name} value={cat.name}>
+                {cat.name[0].toUpperCase() + cat.name.slice(1)}
+              </option>
+            ))}
+          </select>
+          <button 
+            className='btn'
+            type='submit'
+            disabled={isUpdating}>
+            Save
+          </button>
+          <button
+            className='btn'
+            type='button'
+            onClick={() => setIsEditing(false)}
+            disabled={isUpdating}>
+            Cancel
+          </button>
+        </form>
+      )}
     </li>
   );
 }

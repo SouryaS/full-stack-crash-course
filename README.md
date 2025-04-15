@@ -1,20 +1,80 @@
-# Crash Course: Build a Full-Stack Web App in a Weekend!
+<div align="center">
 
-This is a 12 hours course on Udemy made by Jonas Schedtmann.
+# 🚀 Today I Learned: Full-Stack Web App
 
-### Content of the course
+[![Made with React](https://img.shields.io/badge/Made%20with-React-61DAFB?style=flat-square&logo=react)](https://reactjs.org)
+[![Database](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=flat-square&logo=supabase)](https://supabase.io)
+[![Deployed on Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-00C7B7?style=flat-square&logo=netlify)](https://netlify.com)
 
-* HTML
-* CSS
-* Storing the data in a Supabase database
-* JavaScript
-* React
-* Deploy the app in Netlify
+<img src="public/logo.png" alt="Project Logo" width="150px" />
 
-### Overview of the functions of the website
+_Build a modern web app in just 12 hours! 🎯_
 
-* create a new fact and save it in a supabase database
-* vote the fact
-* sort the facts by categories
+[View Demo](https://your-demo-link.netlify.app) · [Report Bug](https://github.com/yourusername/your-repo/issues) · [Request Feature](https://github.com/yourusername/your-repo/issues)
 
-<img width="1216" alt="Screenshot 2022-12-26 at 14 25 25" src="https://user-images.githubusercontent.com/70845953/209553655-1b94d383-13b9-4a15-b2bc-d954c36dd418.png">
+</div>
+
+## ✨ About The Project
+
+This exciting project is part of Jonas Schmedtmann's weekend crash course on Udemy. Learn how to build a full-stack web application where users can share interesting facts and vote on them!
+
+### 🛠️ Built With
+
+* ⚛️ **React** - Modern frontend framework
+* 🎨 **CSS** - Custom styling
+* 🗄️ **Supabase** - Backend database
+* 📱 **Responsive Design** - Mobile-first approach
+* 🚀 **Netlify** - Deployment platform
+
+## ⚡ Core Features
+
+* 📝 Create and share interesting facts
+* 👍 Vote on facts you find interesting
+* 🏷️ Filter facts by categories
+* 💾 Persistent storage with Supabase
+
+## 🎯 Learning Journey
+
+1. **Frontend Development**
+   * HTML5 fundamentals
+   * Modern CSS techniques
+   * React components & hooks
+
+2. **Backend Integration**
+   * Supabase setup & configuration
+   * Real-time data synchronization
+   * User authentication
+
+3. **Deployment**
+   * Production build optimization
+   * Netlify deployment workflow
+   * Performance monitoring
+
+## 📸 Preview
+
+<img width="1216" alt="Application Screenshot" src="https://user-images.githubusercontent.com/70845953/209553655-1b94d383-13b9-4a15-b2bc-d954c36dd418.png">
+
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/your-repo.git
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+```
+
+## 💖 Acknowledgments
+
+* [Jonas Schmedtmann](https://www.udemy.com/user/jonasschmedtmann/) for the amazing course
+* The React community for continuous inspiration
+* Supabase team for the excellent database solution
+
+---
+
+<div align="center">
+Made with ❤️ by [Your Name]
+</div>

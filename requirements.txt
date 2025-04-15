@@ -1,0 +1,11 @@
+# Python dependencies
+supabase-py>=0.0.2
+python-dotenv>=0.19.0
+requests>=2.26.0
+
+# Development dependencies
+pylint>=2.12.0
+black>=21.9b0
+
+# Note: This project primarily uses Node.js/npm for package management.
+# See package.json for JavaScript dependencies.
