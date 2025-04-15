@@ -53,6 +53,7 @@ function App() {
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('all');
+  const [sortOrder, setSortOrder] = useState('desc');
 
   useEffect(
     function () {
@@ -64,7 +65,7 @@ function App() {
         if (currentCategory !== 'all')
           query = query.eq('category', currentCategory);
 
-        query = query.order('votesInteresting', { ascending: false });
+        query = query.order('votesInteresting', { ascending: sortOrder === 'asc' });
 
         const { data: facts, error } = await query;
         if (!error) setFacts(facts);
@@ -73,11 +74,11 @@ function App() {
       }
       getFacts();
     },
-    [currentCategory]
+    [currentCategory, sortOrder]
   );
   return (
     <>
-      <Header showForm={showForm} setShowForm={setShowForm} />
+      <Header showForm={showForm} setShowForm={setShowForm} sortOrder={sortOrder} setSortOrder={setSortOrder} />
       {showForm && (
         <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
       )}
@@ -95,7 +96,7 @@ function Loader() {
   return <p className='message'>Loading...</p>;
 }
 
-function Header({ showForm, setShowForm }) {
+function Header({ showForm, setShowForm, sortOrder, setSortOrder }) {
   const [theme, setTheme] = useState('dark');
   const appTitle = 'Today I learned!';
 
@@ -105,24 +106,36 @@ function Header({ showForm, setShowForm }) {
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
+  const toggleSort = () => {
+    setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'));
+  };
+
   return (
     <header className='header'>
       <div className='logo'>
         <img src='logo.png' height='68' width='68' alt='Today I Learned Logo' />
         <h1>{appTitle}</h1>
       </div>
-      <button
-        className='btn btn-large btn-open'
-        onClick={() => setShowForm((show) => !show)}
-      >
-        {showForm ? 'Close' : 'Share a fact'}
-      </button>
-      <button
-        className={`theme-toggle ${theme === 'light' ? 'light-mode' : ''}`}
-        onClick={toggleTheme}
-      >
-        <i className='fas fa-moon'></i>
-      </button>
+      <div className='header-buttons'>
+        <button
+          className='btn btn-sort'
+          onClick={toggleSort}
+        >
+          Sort {sortOrder === 'desc' ? '↓' : '↑'}
+        </button>
+        <button
+          className='btn btn-large btn-open'
+          onClick={() => setShowForm((show) => !show)}
+        >
+          {showForm ? 'Close' : 'Share a fact'}
+        </button>
+        <button
+          className={`theme-toggle ${theme === 'light' ? 'light-mode' : ''}`}
+          onClick={toggleTheme}
+        >
+          <i className='fas fa-moon'></i>
+        </button>
+      </div>
     </header>
   );
 }
